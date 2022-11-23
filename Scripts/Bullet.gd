@@ -1,5 +1,6 @@
 extends Area2D
 
+
 # Emitted when instantiate
 signal instantiated
 
@@ -29,6 +30,7 @@ func _on_Bullet_instantiated():
 	var y_dir = sin(angle)
 
 	direction = Vector2(x_dir, y_dir)
+
 
 func _on_Bullet_body_entered(_body: Node):
 	queue_free()
