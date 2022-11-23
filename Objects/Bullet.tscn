@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Effects/light.jpg" type="Texture" id=1]
+[ext_resource path="res://Scripts/Bullet.gd" type="Script" id=2]
+
+[sub_resource type="QuadMesh" id=1]
+size = Vector2( 5, 5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 3, 1 )
+
+[node name="Bullet" type="Area2D"]
+script = ExtResource( 2 )
+speed = 800
+
+[node name="BulletMesh" type="MeshInstance2D" parent="."]
+scale = Vector2( 1.2, 0.4 )
+mesh = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 2 )
+
+[node name="Light2D" type="Light2D" parent="."]
+scale = Vector2( 1.13778, 0.924444 )
+texture = ExtResource( 1 )
+shadow_enabled = true
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]
+[connection signal="instantiated" from="." to="." method="_on_Bullet_instantiated"]
+[connection signal="viewport_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_viewport_exited"]

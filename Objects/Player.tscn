@@ -1,0 +1,185 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scripts/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Effects/light.jpg" type="Texture" id=2]
+
+[sub_resource type="QuadMesh" id=1]
+size = Vector2( 5, 5 )
+
+[sub_resource type="CircleShape2D" id=11]
+radius = 12.0
+
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Body/LeftFoot:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Body/LeftFoot:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Body/RightFoot:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Body/RightFoot:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "player_walk"
+length = 0.6
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("Body/LeftFoot:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -8, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0, -8, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("Body/LeftFoot:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( -3, -0.25, 0, 0.25, 0, -3, -0.25, 0, 0.25, 0, -3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("Body/RightFoot:position:x")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( 8, -0.25, 0, 0.25, 0, -8, -0.25, 0, 0.25, 0, 8, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("Body/RightFoot:position:y")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 3, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0, 3, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.3, 0.6 )
+}
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "RESET"
+
+[sub_resource type="AnimationNodeAnimation" id=6]
+animation = "player_walk"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=8]
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachine" id=9]
+states/RESET/node = SubResource( 5 )
+states/RESET/position = Vector2( 196, 58 )
+states/player_walk/node = SubResource( 6 )
+states/player_walk/position = Vector2( 416, 58 )
+transitions = [ "RESET", "player_walk", SubResource( 7 ), "player_walk", "RESET", SubResource( 8 ) ]
+start_node = "RESET"
+graph_offset = Vector2( -80, -50 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=10]
+
+[node name="Player" type="KinematicBody2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="LeftFoot" type="MeshInstance2D" parent="Body"]
+modulate = Color( 0.25098, 0.152941, 0.0823529, 1 )
+position = Vector2( 0, -3 )
+scale = Vector2( 1.89827, 1 )
+mesh = SubResource( 1 )
+
+[node name="RightFoot" type="MeshInstance2D" parent="Body"]
+modulate = Color( 0.25098, 0.152941, 0.0823529, 1 )
+position = Vector2( 0, 3 )
+scale = Vector2( 1.89827, 1 )
+mesh = SubResource( 1 )
+
+[node name="LeftArm" type="MeshInstance2D" parent="Body"]
+modulate = Color( 0.337255, 0.337255, 0.337255, 1 )
+position = Vector2( 9, -6 )
+rotation = 0.557306
+scale = Vector2( 3.59309, 1.2 )
+mesh = SubResource( 1 )
+
+[node name="RightArm" type="MeshInstance2D" parent="Body"]
+modulate = Color( 0.337255, 0.337255, 0.337255, 1 )
+position = Vector2( 9, 6 )
+rotation = -0.55676
+scale = Vector2( 3.59309, 1.2 )
+mesh = SubResource( 1 )
+
+[node name="Gun" type="MeshInstance2D" parent="Body"]
+position = Vector2( 21, 0 )
+scale = Vector2( 3, 0.7 )
+mesh = SubResource( 1 )
+
+[node name="Head" type="MeshInstance2D" parent="Body"]
+scale = Vector2( 3.2, 3.2 )
+mesh = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 6, 0 )
+shape = SubResource( 11 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/player_walk = SubResource( 4 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 9 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 10 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 2 )
+shadow_enabled = true
+
+[node name="BulletSpawnPoint" type="Position2D" parent="."]
+position = Vector2( 29, 0 )
